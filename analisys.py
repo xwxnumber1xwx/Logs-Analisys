@@ -3,8 +3,35 @@ import psycopg2
 DBNAME = "news"
 
 query = ''
-QUERY1 = 'SELECT title, num FROM articles LEFT JOIN (SELECT path, count(path) as num FROM log GROUP BY path ORDER BY num desc) as res on substring(path, 10) = slug LIMIT 3;'
-QUERY2 = 'SELECT name, sum(num) FROM authors, (SELECT author, title, num FROM articles LEFT JOIN (SELECT path, count(path) as num FROM log GROUP BY path ORDER BY num desc) as res on substring(path, 10) = slug) as aut WHERE author = id GROUP BY name ORDER BY sum desc LIMIT 1;'
+QUERY1 = '''
+SELECT title, num
+    FROM articles
+    LEFT JOIN (
+        SELECT path, count(path) AS num
+        FROM log
+        GROUP BY path
+        ORDER BY num desc) AS res
+        ON substring(path, 10) = slug
+        LIMIT 3;
+'''
+
+QUERY2 = '''
+SELECT name, sum(num)
+    FROM authors, (
+        SELECT author, title, num
+        FROM articles
+        LEFT JOIN (
+            SELECT path, count(path) as num
+            FROM log
+            GROUP BY path
+            ORDER BY num desc) AS res
+        ON substring(path, 10) = slug) AS aut
+    WHERE author = id
+    GROUP BY name
+    ORDER BY sum desc
+    LIMIT 1;
+'''
+
 QUERY3 = '''
 CREATE OR REPLACE VIEW allrequests AS
     SELECT status, date(time) AS date FROM log;
@@ -37,7 +64,6 @@ SELECT *, errors*100::double precision/tot_requests::double precision AS percent
     FROM allrequests_err
     WHERE errors::double precision*100/tot_requests::double precision >= 1
     LIMIT 10;
-
 '''
 
 
