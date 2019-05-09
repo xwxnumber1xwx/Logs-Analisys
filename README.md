@@ -22,6 +22,17 @@ Use `vagrant up` to bring the virtual machine online and `vagrant ssh` to login.
 6. Now execute the Python file - `python logs_analysis.py`.
 
 
+#### PROJECT REQUIREMENTS
+Reporting tool should answer the following questions:
+
+1. What are the most popular three articles of all time?
+2. Who are the most popular article authors of all time?
+3. On which days did more than 1% of requests lead to errors?
+
+Project follows good SQL coding practices: Each question should be answered with a single database query.
+The code is error free and conforms to the PEP8 style recommendations.
+The code presents its output in clearly formatted plain text.
+
 #### CREATE THE FOLLOWING VIEWS FOR QUESTION 2 AND QUESTION 3:
 
 ##### Views for Question 2
