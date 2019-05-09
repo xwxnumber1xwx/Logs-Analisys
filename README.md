@@ -21,6 +21,8 @@ Use `vagrant up` to bring the virtual machine online and `vagrant ssh` to login.
 
 6. Now execute the Python file - `python logs_analysis.py`.
 
+7. Choose one SQL query and see the result
+
 
 #### PROJECT REQUIREMENTS
 Reporting tool should answer the following questions:
@@ -32,36 +34,3 @@ Reporting tool should answer the following questions:
 Project follows good SQL coding practices: Each question should be answered with a single database query.
 The code is error free and conforms to the PEP8 style recommendations.
 The code presents its output in clearly formatted plain text.
-
-#### CREATE THE FOLLOWING VIEWS FOR QUESTION 2 AND QUESTION 3:
-
-##### Views for Question 2
-```sql
-CREATE VIEW article_authors AS
-SELECT title, name
-FROM articles, authors
-WHERE articles.author = authors.id;
-```
-```sql 
-CREATE VIEW article_views AS
-SELECT title, count(log.id) as views
-FROM articles, log
-WHERE log.path = CONCAT('/article/', articles.slug)
-GROUP BY articles.title
-ORDER BY views desc;
-```
-
-##### Views for Question 3
-```sql
-CREATE VIEW logs AS
-SELECT to_char(time,'DD-MON-YYYY') as Date, count(*) as LogCount
-FROM log
-GROUP BY Date;
-```
-```sql
-CREATE VIEW errorlogs AS
-SELECT to_char(time,'DD-MON-YYYY') as Date, count(*) as ErrorCount
-FROM log
-WHERE STATUS = '404 NOT FOUND'
-GROUP BY Date;
-```
